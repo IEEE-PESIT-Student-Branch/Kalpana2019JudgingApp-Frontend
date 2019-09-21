@@ -54,6 +54,8 @@ flutter {
     source '../..'
 }
 
+apply plugin: 'com.google.gms.google-services'
+
 dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

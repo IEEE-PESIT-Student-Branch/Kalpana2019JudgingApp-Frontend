@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:kalpana2019judgingapp/models/EventSchedule.dart';
 
-class Jschedule extends StatelessWidget {
+class SchedulePage extends StatelessWidget {
   //List of the Events
-    final List<EventSchedule> _events = [
-    EventSchedule(event:'7:00 am - Registration'),
-    EventSchedule(event:'8:00 am - Inagauration')    
+  final List<EventSchedule> _events = [
+    EventSchedule(event: '7:00 am - Registration'),
+    EventSchedule(event: '8:00 am - Inagauration')
   ];
 
   @override
@@ -40,8 +40,7 @@ class Jschedule extends StatelessWidget {
               ),
               SizedBox(height: 3),
               Container(
-                
-                height: 60,
+                height: 70,
                 margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: Card(
                   elevation: 6,
@@ -59,7 +58,7 @@ class Jschedule extends StatelessWidget {
                 ),
               ),
               Container(
-                height: 60,
+                height: 70,
                 margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: Card(
                   elevation: 6,
@@ -83,4 +82,3 @@ class Jschedule extends StatelessWidget {
     );
   }
 }
-
