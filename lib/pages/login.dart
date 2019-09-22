@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -133,13 +134,20 @@ class _LoginPageState extends State<LoginPage> {
 
   void validateData() async {
     try {
-      print("Email: " + _username.text);
-      print("Pass: " + _password.text);
       AuthResult result = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
-              email: _username.text, password: _password.text);
+              email: _username.text+"@kalpana.com", password: _password.text);
       FirebaseUser user = result.user;
       Navigator.pushReplacementNamed(context, '/home');
+    } on PlatformException catch (e) {
+      if (e.code == "ERROR_USER_NOT_FOUND") {
+        showError("User Not Found");
+      } else if (e.code == "ERROR_INVALID_EMAIL") {
+        showError("Invalid Email");
+      } else if (e.code == "ERROR_WRONG_PASSWORD") {
+        showError("Wrong Password");
+      }
+      // print("Invalid Email: ${e.code}");
     } catch (e) {
       print("Error: $e");
     }
