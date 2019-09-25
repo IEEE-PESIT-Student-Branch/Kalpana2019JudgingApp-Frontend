@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "100031338810",
+    "firebase_url": "https://kalpana2019app.firebaseio.com",
+    "project_id": "kalpana2019app",
+    "storage_bucket": "kalpana2019app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:100031338810:android:85d110333a8d0c02e9d803",
+        "android_client_info": {
+          "package_name": "com.example.kalpana2019judgingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "100031338810-ie2mlnielg6snunscujeibb12re9fjv1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMoHqN1ZYMhmhEfMoPQC_n8necvoqxHxU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "100031338810-ie2mlnielg6snunscujeibb12re9fjv1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

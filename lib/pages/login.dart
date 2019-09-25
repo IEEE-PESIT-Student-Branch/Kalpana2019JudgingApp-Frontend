@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -7,9 +9,16 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+  final focus = FocusNode();
   final _username = TextEditingController();
   final _password = TextEditingController();
   final key = new GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +62,9 @@ class _LoginPageState extends State<LoginPage> {
                             color: Colors.white,
                           ),
                           child: TextField(
+                            onSubmitted: (str) {
+                              FocusScope.of(context).requestFocus(focus);
+                            },
                             controller: _username,
                             decoration: InputDecoration(
                               hintText: "Username",
@@ -70,6 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                             color: Colors.white,
                           ),
                           child: TextField(
+                            focusNode: focus,
                             controller: _password,
                             decoration: InputDecoration(
                               hintText: "Password",
@@ -85,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20)),
                             padding: EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 10),
+                                horizontal: 45, vertical: 15),
                             onPressed: () {
                               String username = _username.text;
                               String password = _password.text;
@@ -97,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                                 showError("Enter a Password");
                                 return;
                               }
-                              Navigator.pushReplacementNamed(context, '/home');
+                              validateData();
                             },
                           ),
                         ),
@@ -122,5 +135,26 @@ class _LoginPageState extends State<LoginPage> {
         style: TextStyle(color: Colors.black),
       ),
     ));
+  }
+
+  void validateData() async {
+    try {
+      AuthResult result = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+              email: _username.text + "@kalpana.com", password: _password.text);
+      FirebaseUser user = result.user;
+      Navigator.pushReplacementNamed(context, '/home');
+    } on PlatformException catch (e) {
+      if (e.code == "ERROR_USER_NOT_FOUND") {
+        showError("User Not Found");
+      } else if (e.code == "ERROR_INVALID_EMAIL") {
+        showError("Invalid Email");
+      } else if (e.code == "ERROR_WRONG_PASSWORD") {
+        showError("Wrong Password");
+      }
+      // print("Invalid Email: ${e.code}");
+    } catch (e) {
+      print("Error: $e");
+    }
   }
 }
