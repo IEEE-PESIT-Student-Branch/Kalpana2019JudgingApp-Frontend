@@ -20,8 +20,8 @@ class MyApp extends StatelessWidget {
       title: 'Kalpana 2019 Judging',
       initialRoute: '/',
       routes: {
-        '/': (context) => TimerPage(),
-        // '/': (context) => RootPage(),
+        '/timer': (context) => TimerPage(),
+        '/': (context) => RootPage(),
         '/home/scoring': (context) => ScorePage(),
         '/schedule': (context) => SchedulePage(),
         '/home': (context) => HomePage(),

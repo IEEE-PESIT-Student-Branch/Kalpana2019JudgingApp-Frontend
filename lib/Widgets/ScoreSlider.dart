@@ -2,14 +2,22 @@ import 'package:flutter/material.dart';
 
 class ScoreSlider extends StatefulWidget {
   String label;
+  double value;
 
-  ScoreSlider(this.label);
+  ScoreSlider(this.label){
+    this.value = 5;
+  }
   @override
   _ScoreSliderState createState() => _ScoreSliderState();
 }
 
 class _ScoreSliderState extends State<ScoreSlider> {
-  double _value = 5;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -26,11 +34,11 @@ class _ScoreSliderState extends State<ScoreSlider> {
             divisions: 10,
             min: 0,
             max: 10,
-            value: _value,
+            value: widget.value,
             onChanged: (x) {
               setState(
                 () {
-                  _value = x;
+                  widget.value = x;
                 },
               );
             },
@@ -39,7 +47,7 @@ class _ScoreSliderState extends State<ScoreSlider> {
         Padding(
           padding: const EdgeInsets.only(right: 20.0),
           child: Text(
-            "${_value.round()}",
+            "${widget.value.round()}",
             style: TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.bold,

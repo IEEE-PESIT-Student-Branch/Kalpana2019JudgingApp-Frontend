@@ -9,6 +9,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+  final focus = FocusNode();
   final _username = TextEditingController();
   final _password = TextEditingController();
   final key = new GlobalKey<ScaffoldState>();
@@ -61,6 +62,9 @@ class _LoginPageState extends State<LoginPage> {
                             color: Colors.white,
                           ),
                           child: TextField(
+                            onSubmitted: (str) {
+                              FocusScope.of(context).requestFocus(focus);
+                            },
                             controller: _username,
                             decoration: InputDecoration(
                               hintText: "Username",
@@ -78,6 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                             color: Colors.white,
                           ),
                           child: TextField(
+                            focusNode: focus,
                             controller: _password,
                             decoration: InputDecoration(
                               hintText: "Password",
@@ -136,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
     try {
       AuthResult result = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
-              email: _username.text+"@kalpana.com", password: _password.text);
+              email: _username.text + "@kalpana.com", password: _password.text);
       FirebaseUser user = result.user;
       Navigator.pushReplacementNamed(context, '/home');
     } on PlatformException catch (e) {

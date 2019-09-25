@@ -12,9 +12,7 @@ class ParticipantTile extends StatelessWidget {
   TextStyle sub =
       TextStyle(fontSize: 14, color: Color.fromRGBO(255, 255, 255, 0.67));
 
-  ParticipantTile(this.data) {
-    print("$data");
-  }
+  ParticipantTile(this.data);
 
   @override
   Widget build(BuildContext context) {

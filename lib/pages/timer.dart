@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 class TimerPage extends StatelessWidget {
   @override
@@ -9,9 +9,10 @@ class TimerPage extends StatelessWidget {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        child: WebView(
-          initialUrl: 'http://192.168.1.2:8080/',
-          javascriptMode: JavascriptMode.unrestricted,
+        child: WebviewScaffold(
+          withJavascript: true,
+          url: 'http://192.168.1.2:8080',
+          displayZoomControls: true,
         ),
       ),
     );
