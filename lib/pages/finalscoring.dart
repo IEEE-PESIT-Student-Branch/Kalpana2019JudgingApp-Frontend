@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 import '../models/ScoreArgs.dart';
 
-class ScorePage extends StatelessWidget {
+class FinalScorePage extends StatelessWidget {
   List<ScoreSlider> sliders = [
     ScoreSlider("Problem Clarity"),
     ScoreSlider("Target Clarity"),
@@ -49,7 +49,7 @@ class ScorePage extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: Text(
-                          args.title+"Score",
+                          args.title,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 36,

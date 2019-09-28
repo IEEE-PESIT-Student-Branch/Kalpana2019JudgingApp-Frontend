@@ -15,9 +15,11 @@ class HomePage extends StatelessWidget {
     Participant(index: "#10", name: "C Sick", room: "Room - 004"),
   ];
 
+  String uid = "";
+  int round;
+
   @override
   Widget build(BuildContext context) {
-    // print(res);
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -80,13 +82,31 @@ class HomePage extends StatelessWidget {
                           print("Error Occured");
                         }
                         return snapshot.hasData
-                            ? ListView.builder(
-                                itemCount: snapshot.data.length,
-                                scrollDirection: Axis.vertical,
-                                itemBuilder: (context, index) {
-                                  return ParticipantTile(snapshot.data[index]);
-                                },
-                              )
+                            ? (snapshot.data.length > 0
+                                ? ListView.builder(
+                                    itemCount: snapshot.data.length,
+                                    scrollDirection: Axis.vertical,
+                                    itemBuilder: (context, index) {
+                                      return ParticipantTile(
+                                        data: snapshot.data[index],
+                                        round: round,
+                                      );
+                                    },
+                                  )
+                                : Center(
+                                    child: Wrap(
+                                      children: [
+                                        Text(
+                                          "Great! You're done judging all teams!",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
+                                  ))
                             : Center(
                                 child: CircularProgressIndicator(),
                               );
@@ -107,16 +127,23 @@ class HomePage extends StatelessWidget {
   }
 
   Future<List<Participant>> sendRequest() async {
-    final res = await http.get('http://192.168.1.2:8080/teams');
-
+    // while(uid.isEmpty);
+    uid = await getUid();
+    final res = await http.get('http://192.168.1.2:8080/teams/$uid');
     final x = parseRequest(res.body);
     return x;
   }
 
   List<Participant> parseRequest(String response) {
-    final parsed = json.decode(response).cast<Map<String, dynamic>>();
+    final decode = json.decode(response);
+    round = decode['round'];
+    final parsed = decode['teams'].cast<Map<String, dynamic>>();
     return parsed
         .map<Participant>((json) => Participant.fromJSON(json))
         .toList();
+  }
+
+  Future<String> getUid() async {
+    return (await FirebaseAuth.instance.currentUser()).uid;
   }
 }

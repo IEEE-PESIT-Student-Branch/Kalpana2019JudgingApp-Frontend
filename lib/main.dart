@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kalpana2019judgingapp/pages/finalscoring.dart';
 import 'package:kalpana2019judgingapp/pages/scoring.dart';
 // import 'package:kalpana2019judgingapp/pages/Jschedule.dart';
 // import 'package:kalpana2019judgingapp/pages/login.dart';
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/timer': (context) => TimerPage(),
         '/': (context) => RootPage(),
-        '/home/scoring': (context) => ScorePage(),
+        '/home/mentor': (context) => ScorePage(),
+        '/home/scoring': (context) => FinalScorePage(),
         '/schedule': (context) => SchedulePage(),
         '/home': (context) => HomePage(),
         '/login': (context) => LoginPage(),
