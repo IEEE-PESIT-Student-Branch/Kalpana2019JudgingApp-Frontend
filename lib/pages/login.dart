@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kalpana2019judgingapp/Widgets/dialog.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -100,16 +101,22 @@ class _LoginPageState extends State<LoginPage> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 45, vertical: 15),
                             onPressed: () {
-                              String username = _username.text;
-                              String password = _password.text;
-                              if (username.isEmpty) {
-                                showError("Enter an Username");
-                                return;
-                              }
-                              if (password.isEmpty) {
-                                showError("Enter a Password");
-                                return;
-                              }
+                              // String username = _username.text;
+                              // String password = _password.text;
+                              // if (username.isEmpty) {
+                              //   showError("Enter an Username");
+                              //   return;
+                              // }
+                              // if (password.isEmpty) {
+                              //   showError("Enter a Password");
+                              //   return;
+                              // }
+                              // validateData();
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                child: LoginDialog(),
+                              );
                               validateData();
                             },
                           ),
@@ -143,6 +150,7 @@ class _LoginPageState extends State<LoginPage> {
           .signInWithEmailAndPassword(
               email: _username.text + "@kalpana.com", password: _password.text);
       FirebaseUser user = result.user;
+      Navigator.of(context).pop();
       Navigator.pushReplacementNamed(context, '/home');
     } on PlatformException catch (e) {
       if (e.code == "ERROR_USER_NOT_FOUND") {

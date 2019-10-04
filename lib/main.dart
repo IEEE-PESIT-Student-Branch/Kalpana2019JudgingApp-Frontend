@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kalpana2019judgingapp/Widgets/dialog.dart';
 import 'package:kalpana2019judgingapp/pages/finalscoring.dart';
 import 'package:kalpana2019judgingapp/pages/scoring.dart';
 // import 'package:kalpana2019judgingapp/pages/Jschedule.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       title: 'Kalpana 2019 Judging',
       initialRoute: '/',
       routes: {
+        '/login/dialog': (context) => LoginDialog(),
         '/timer': (context) => TimerPage(),
         '/': (context) => RootPage(),
         '/home/mentor': (context) => ScorePage(),

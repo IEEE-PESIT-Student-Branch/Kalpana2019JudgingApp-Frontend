@@ -8,7 +8,12 @@ import '../models/NoGlowScroll.dart';
 import '../models/Participant.dart';
 import '../Widgets/ParticipantTile.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   List<Participant> list = <Participant>[
     Participant(index: "#1", name: "Hack O Holics", room: "Seminar Hall 1"),
     Participant(index: "#5", name: "404 Not Found", room: "Cafetaria"),
@@ -16,11 +21,18 @@ class HomePage extends StatelessWidget {
   ];
 
   String uid = "";
+
   int round;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {});
+        },
+        child: Icon(Icons.refresh),
+      ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -74,44 +86,7 @@ class HomePage extends StatelessWidget {
                 Expanded(
                   child: ScrollConfiguration(
                     behavior: NoGlowScroll(),
-                    child: FutureBuilder<List<Participant>>(
-                      future: sendRequest(),
-                      builder: (context, snapshot) {
-                        print("Snapshot: ${snapshot}");
-                        if (snapshot.hasError) {
-                          print("Error Occured");
-                        }
-                        return snapshot.hasData
-                            ? (snapshot.data.length > 0
-                                ? ListView.builder(
-                                    itemCount: snapshot.data.length,
-                                    scrollDirection: Axis.vertical,
-                                    itemBuilder: (context, index) {
-                                      return ParticipantTile(
-                                        data: snapshot.data[index],
-                                        round: round,
-                                      );
-                                    },
-                                  )
-                                : Center(
-                                    child: Wrap(
-                                      children: [
-                                        Text(
-                                          "Great! You're done judging all teams!",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ],
-                                    ),
-                                  ))
-                            : Center(
-                                child: CircularProgressIndicator(),
-                              );
-                      },
-                    ),
+                    child: FutureList(sendRequest, round),
                   ),
                 ),
               ],
@@ -129,7 +104,8 @@ class HomePage extends StatelessWidget {
   Future<List<Participant>> sendRequest() async {
     // while(uid.isEmpty);
     uid = await getUid();
-    final res = await http.get('http://192.168.1.2:8080/teams/$uid');
+    final res =
+        await http.get('http://kalpana2019judgingapp.herokuapp.com/teams/$uid');
     final x = parseRequest(res.body);
     return x;
   }
@@ -145,5 +121,58 @@ class HomePage extends StatelessWidget {
 
   Future<String> getUid() async {
     return (await FirebaseAuth.instance.currentUser()).uid;
+  }
+}
+
+class FutureList extends StatefulWidget {
+  Function sendRequest;
+  int round;
+
+  FutureList(this.sendRequest, this.round);
+  @override
+  _FutureListState createState() => _FutureListState();
+}
+
+class _FutureListState extends State<FutureList> {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<Participant>>(
+      future: widget.sendRequest(),
+      builder: (context, snapshot) {
+        print("Snapshot: ${snapshot}");
+        if (snapshot.hasError) {
+          print("Error Occured");
+        }
+        return snapshot.hasData
+            ? (snapshot.data.length > 0
+                ? ListView.builder(
+                    itemCount: snapshot.data.length,
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) {
+                      return ParticipantTile(
+                        data: snapshot.data[index],
+                        round: widget.round,
+                      );
+                    },
+                  )
+                : Center(
+                    child: Wrap(
+                      children: [
+                        Text(
+                          "Great! You're done judging all teams!",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ))
+            : Center(
+                child: CircularProgressIndicator(),
+              );
+      },
+    );
   }
 }

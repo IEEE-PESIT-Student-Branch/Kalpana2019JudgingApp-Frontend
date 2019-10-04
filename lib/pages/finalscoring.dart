@@ -80,7 +80,6 @@ class FinalScorePage extends StatelessWidget {
                     sliders.forEach((slider) {
                       score += slider.value;
                     });
-                    score /= 6;
                     print("Score = $score");
                     http.post(
                       "http://192.168.1.2:8080/scores",

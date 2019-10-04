@@ -7,12 +7,16 @@ import '../models/ScoreArgs.dart';
 
 class ScorePage extends StatelessWidget {
   List<ScoreSlider> sliders = [
-    ScoreSlider("Problem Clarity"),
-    ScoreSlider("Target Clarity"),
-    ScoreSlider("Usefulness"),
-    ScoreSlider("Usability"),
-    ScoreSlider("Ease of Setup"),
-    ScoreSlider("Feasibility"),
+    ScoreSlider("Synergy"),
+    ScoreSlider("Planning"),
+    ScoreSlider("Participative"),
+    ScoreSlider("Discussions"),
+    ScoreSlider("Prior Work"),
+    ScoreSlider("Originality"),
+    ScoreSlider("Integrations"),
+    ScoreSlider("Change Management"),
+    ScoreSlider("Team Motivation"),
+    ScoreSlider("Time Management"),
   ];
 
   String uid;
@@ -41,61 +45,66 @@ class ScorePage extends StatelessWidget {
           height: double.infinity,
           width: double.infinity,
           child: SafeArea(
-            child: Column(
-              children: <Widget>[
-                Center(
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Text(
-                          args.title+"Score",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 36,
-                            fontFamily: "Kau",
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Center(
+                    child: Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
+                          child: Text(
+                            args.title,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 36,
+                              fontFamily: "Kau",
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(vertical: 15),
-                  margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.white,
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                    margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.white,
+                    ),
+                    child: Column(
+                      children: sliders,
+                    ),
                   ),
-                  child: Column(
-                    children: sliders,
-                  ),
-                ),
-                RaisedButton(
-                  child: Text("SUBMIT"),
-                  onPressed: () {
-                    //Try to POST scores
-                    double score = 0;
-                    sliders.forEach((slider) {
-                      score += slider.value;
-                    });
-                    score /= 6;
-                    print("Score = $score");
-                    http.post(
-                      "http://192.168.1.2:8080/scores",
-                      body: {
-                        'score': '$score',
-                        'jid': uid,
-                        'tid': args.teamid,
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 50, top: 10),
+                    child: RaisedButton(
+                      shape: ContinuousRectangleBorder(),
+                      child: Text("SUBMIT"),
+                      onPressed: () {
+                        //Try to POST scores
+                        double score = 0;
+                        sliders.forEach((slider) {
+                          score += slider.value;
+                        });
+                        print("Score = $score");
+                        http.post(
+                          "http://kalpana2019judgingapp.herokuapp.com/scores",
+                          body: {
+                            'score': '$score',
+                            'jid': uid,
+                            'tid': args.teamid,
+                          },
+                        ).then((val) {
+                          Navigator.pop(context);
+                        });
+                        // Navigator.pop(context);
                       },
-                    ).then((val) {
-                      Navigator.pop(context);
-                    });
-                    // Navigator.pop(context);
-                  },
-                ),
-              ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
