@@ -1,11 +1,5 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=C:\src\flutter"
-export "FLUTTER_APPLICATION_PATH=D:\Workspace\Flutter\Kalpana2k19JudgingApp-Frontend\Kalpana2019JudgingApp-Frontend"
-export "FLUTTER_TARGET=lib\main.dart"
-export "FLUTTER_BUILD_DIR=build"
-export "SYMROOT=${SOURCE_ROOT}/../build\ios"
-export "FLUTTER_FRAMEWORK_DIR=C:\src\flutter\bin\cache\artifacts\engine\ios"
 export "FLUTTER_ROOT=/home/varavindhan/flutter"
 export "FLUTTER_APPLICATION_PATH=/home/varavindhan/Documents/Websites/kalpana2019judgingapp"
 export "FLUTTER_TARGET=lib/main.dart"
