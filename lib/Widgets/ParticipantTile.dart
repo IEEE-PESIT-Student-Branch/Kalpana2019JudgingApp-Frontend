@@ -5,6 +5,7 @@ import '../models/ScoreArgs.dart';
 
 class ParticipantTile extends StatelessWidget {
   Participant data;
+  int round;
   TextStyle main = TextStyle(
     fontSize: 17,
     color: Colors.white,
@@ -12,7 +13,7 @@ class ParticipantTile extends StatelessWidget {
   TextStyle sub =
       TextStyle(fontSize: 14, color: Color.fromRGBO(255, 255, 255, 0.67));
 
-  ParticipantTile(this.data);
+  ParticipantTile({this.data,this.round});
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +26,14 @@ class ParticipantTile extends StatelessWidget {
       ),
       child: ListTile(
         onTap: () {
+          if(round==3){
           Navigator.pushNamed(context, '/home/scoring',
-              arguments: ScoringArguments(title: data.name));
+              arguments: ScoringArguments(title: data.name,teamid: data.index));
+          }
+          else{
+            Navigator.pushNamed(context, '/home/mentor',
+              arguments: ScoringArguments(title: data.name,teamid: data.index));
+          }
         },
         title: Wrap(
           children: <Widget>[
