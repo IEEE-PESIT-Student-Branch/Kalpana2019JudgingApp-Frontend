@@ -73,7 +73,12 @@ class FinalScorePage extends StatelessWidget {
                   ),
                 ),
                 RaisedButton(
+                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                   child: Text("SUBMIT"),
+                  color: Colors.yellow[300],
                   onPressed: () {
                     //Try to POST scores
                     double score = 0;

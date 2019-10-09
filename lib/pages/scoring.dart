@@ -80,7 +80,12 @@ class ScorePage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 50, top: 10),
                     child: RaisedButton(
-                      shape: ContinuousRectangleBorder(),
+                      color: Colors.yellow[300],
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
                       child: Text("SUBMIT"),
                       onPressed: () {
                         //Try to POST scores
